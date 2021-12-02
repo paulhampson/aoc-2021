@@ -1,2 +1,2 @@
-# aoc-2021
-Advent of Code 2021
+# Advent of Code 2021
+Time to learn Rust via Advent of Code 2021. This probably won't be pretty...
