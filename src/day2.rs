@@ -7,10 +7,11 @@ pub fn day2a() -> String {
 
     for line in input_lines {
         let parts = line.split(" ").collect::<Vec<&str>>();
+        let value = parts[1].parse::<usize>().unwrap();
         match parts[0] {
-            "forward" => horizontal_pos += parts[1].parse::<usize>().unwrap(),
-            "down" => depth_pos += parts[1].parse::<usize>().unwrap(),
-            "up" => depth_pos -= parts[1].parse::<usize>().unwrap(),
+            "forward" => horizontal_pos += value,
+            "down" => depth_pos += value,
+            "up" => depth_pos -= value,
             _ => (),
         };
     }
@@ -26,14 +27,14 @@ pub fn day2b() -> String {
 
     for line in input_lines {
         let parts = line.split(" ").collect::<Vec<&str>>();
+        let value = parts[1].parse::<usize>().unwrap();
         match parts[0] {
             "forward" => {
-                let horizontal_delta = parts[1].parse::<usize>().unwrap();
-                horizontal_pos += horizontal_delta;
-                depth_pos += horizontal_delta * depth_aim;
+                horizontal_pos += value;
+                depth_pos += value * depth_aim;
             },
-            "down" => depth_aim += parts[1].parse::<usize>().unwrap(),
-            "up" => depth_aim -= parts[1].parse::<usize>().unwrap(),
+            "down" => depth_aim += value,
+            "up" => depth_aim -= value,
             _ => (),
         };
     }
