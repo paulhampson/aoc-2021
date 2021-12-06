@@ -67,8 +67,6 @@ fn oxygen_rating(input_strings: &Vec<String>) -> i32 {
         number_list = new_number_list.clone();
         new_number_list = Vec::new();
 
-        println!("{:?}", number_list);
-
         // if there's only one entry left then we're done
         if number_list.len() == 1 {
             break;
@@ -93,8 +91,6 @@ fn co2_rating(input_strings: &Vec<String>) -> i32 {
         }
         number_list = new_number_list.clone();
         new_number_list = Vec::new();
-
-        println!("{:?}", number_list);
 
         // if there's only one entry left then we're done
         if number_list.len() == 1 {
