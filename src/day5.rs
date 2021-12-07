@@ -65,31 +65,45 @@ fn populate_grid(lines: &Vec<Line>) -> Grid<i32> {
     let mut line_map = Grid::from_vec(vec![0; (x * y) as usize], x as usize);
 
     for line in lines {
-        if line.start.x == line.end.x {
-            // vertical line
-            let x_pos = line.start.x;
-            // ensure start is l.t. end
-            let mut start_y = line.start.y;
-            let mut end_y = line.end.y;
-            if start_y > end_y {
-                start_y = line.end.y;
-                end_y = line.start.y;
+        // Determine which way we need to move in the X and Y axes
+        let mut x_step = 0;
+        let mut y_step = 0;
+        if line.start.x < line.end.x {
+            x_step = 1;
+        }
+        if line.start.x > line.end.x {
+            x_step = -1;
+        }
+        if line.start.y < line.end.y {
+            y_step = 1;
+        }
+        if line.start.y > line.end.y {
+            y_step = -1;
+        }
+
+        let x_start = line.start.x;
+        let y_start = line.start.y;
+        let x_end = line.end.x;
+        let y_end = line.end.y;
+
+        let mut x_pos = x_start;
+        let mut y_pos = y_start;
+        let mut x_finished = false;
+        let mut y_finished = false;
+
+        while !x_finished || !y_finished {
+            line_map[x_pos as usize][y_pos as usize] += 1;
+
+            if x_pos != x_end {
+                x_pos += x_step;
+            } else {
+                x_finished = true;
             }
-            for y_pos in start_y..end_y + 1 {
-                line_map[x_pos as usize][y_pos as usize] += 1;
-            }
-        } else if line.start.y == line.end.y {
-            // horizontal line
-            let y_pos = line.start.y;
-            // ensure start is l.t. end
-            let mut start_x = line.start.x;
-            let mut end_x = line.end.x;
-            if start_x > end_x {
-                start_x = line.end.x;
-                end_x = line.start.x;
-            }
-            for x_pos in start_x..end_x + 1 {
-                line_map[x_pos as usize][y_pos as usize] += 1;
+
+            if y_pos != y_end {
+                y_pos += y_step;
+            } else {
+                y_finished = true;
             }
         }
     }
@@ -118,5 +132,10 @@ pub fn day5a() -> String {
 }
 
 pub fn day5b() -> String {
-    "Nope".to_string()
+    let input_lines: Vec<String> = Vec::read_input("./inputs/day5/full".to_string());
+    let all_lines = parse_line_input(input_lines);
+    let map = populate_grid(&all_lines);
+    let overlap_count = overlap_count(&map);
+
+    overlap_count.to_string()
 }
