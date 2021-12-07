@@ -5,7 +5,8 @@ use aoc_2021::day2::{day2a, day2b};
 use aoc_2021::day3::{day3a, day3b};
 use aoc_2021::day4::{day4a, day4b};
 use aoc_2021::day5::{day5a, day5b};
-use aoc_2021::day6::{day6a, day6b};
+use aoc_2021::day6::day6a;
+use aoc_2021::day6b::day6b;
 
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();

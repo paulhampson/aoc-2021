@@ -1,8 +1,6 @@
-use std::thread;
-
 use read_file::InputParser;
 
-fn parse_initial_population(input: Vec<String>) -> Vec<i32> {
+pub fn parse_initial_population(input: Vec<String>) -> Vec<i32> {
     let separate_values: Vec<&str> = input[0].split(",").collect();
     separate_values
         .iter()
@@ -38,29 +36,4 @@ pub fn day6a() -> String {
     let mut fish_population = parse_initial_population(input_lines);
     fish_population = run_simulation(fish_population, 80);
     fish_population.len().to_string()
-}
-
-pub fn day6b() -> String {
-    let input_lines: Vec<String> = Vec::read_input("./inputs/day6/basic".to_string());
-    let mut fish_population = parse_initial_population(input_lines);
-
-    let mut cores = usize::min(fish_population.len(), 12);
-    let chunk_size = fish_population.len() / cores;
-    // split the population into number of core parts so that we can run it across multiple threads, we can then combine the results
-    let population_chunks = fish_population.chunks_mut(chunk_size);
-
-    let mut thread_handles = Vec::new();
-    for chunk in population_chunks {
-        let thread_chunk = chunk.to_vec().clone();
-        let handle = thread::spawn(move || run_simulation(thread_chunk.to_vec(), 256));
-        thread_handles.push(handle);
-    }
-
-    /* wait for thread completion */
-    let mut full_population = Vec::new();
-    for handle in thread_handles {
-        full_population.append(&mut handle.join().unwrap());
-    }
-
-    full_population.len().to_string()
 }
