@@ -12,6 +12,7 @@ fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
 
 pub trait InputParser<T> {
     fn read_input(filename: String) -> Vec<T>;
+    fn read_single_line_csv(filename: String) -> Vec<T>;
 }
 
 impl InputParser<String> for Vec<String> {
@@ -27,6 +28,11 @@ impl InputParser<String> for Vec<String> {
         }
         return all_lines;
     }
+
+    fn read_single_line_csv(_filename: String) -> Vec<String> {
+        // Not yet implemented
+        Vec::new()
+    }
 }
 
 impl InputParser<usize> for Vec<usize> {
@@ -41,5 +47,19 @@ impl InputParser<usize> for Vec<usize> {
             }
         }
         return all_lines;
+    }
+
+    fn read_single_line_csv(filename: String) -> Vec<usize> {
+        let mut result: Vec<usize> = vec![];
+        if let Ok(mut lines) = read_lines(filename) {
+            if let Ok(first_line) = lines.next().unwrap() {
+                let separate_values: Vec<&str> = first_line.split(',').collect();
+                result = separate_values
+                    .iter()
+                    .map(|s| s.parse::<usize>().unwrap())
+                    .collect();
+            }
+        }
+        return result;
     }
 }

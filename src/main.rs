@@ -7,6 +7,7 @@ use aoc_2021::day4::{day4a, day4b};
 use aoc_2021::day5::{day5a, day5b};
 use aoc_2021::day6::day6a;
 use aoc_2021::day6b::day6b;
+use aoc_2021::day7::{day7a, day7b};
 
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();
@@ -27,6 +28,8 @@ fn main() {
         "day5b" => day5b(),
         "day6a" => day6a(),
         "day6b" => day6b(),
+        "day7a" => day7a(),
+        "day7b" => day7b(),
         _ => "Problem solution not available".to_string(),
     };
 
